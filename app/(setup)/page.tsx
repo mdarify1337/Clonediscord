@@ -1,0 +1,71 @@
+import { initialProfile } from '@/lib/initial-profile';
+import { db } from '@/lib/db';
+import { redirect } from 'next/navigation';
+import {InitialModal} from '@/components/modals/initial-modal';
+
+const SetupPage = async () => {
+  const profile = await initialProfile();
+  
+  if (!profile) {
+    return (
+      <div>
+        Error: Profile not found.
+      </div>
+    );
+  }
+  console.log("profile : ==> \n", profile);
+
+  const server = await db.server.findFirst({
+    where: {
+      members: {
+        some: {
+          profileId: profile.userID
+        }
+      }
+    }
+  });
+
+  if (server) {
+    return redirect(`/servers/${server.id}`);
+  }
+
+  console.log("server : ==> ",server);
+
+  return <InitialModal />
+
+}
+
+export default SetupPage;
+
+/*
+export default async function SetupPage() {
+    const router = useRouter();
+    
+    useEffect(() => {
+      async function fetchData() {
+        const profile = await initialProfile();
+        const server = await db.server.findFirst({
+          where: {
+            members: {
+              some: {
+                profileid: profile.id,
+              },
+            },
+          },
+        });
+  
+        if (server) {
+          router.push(`/servers/${server.id}`);
+        }
+      }
+  
+      fetchData();
+    }, [router]);
+  
+    return (
+      <div>
+        Create a Server
+      </div>
+    );
+  }
+*/
