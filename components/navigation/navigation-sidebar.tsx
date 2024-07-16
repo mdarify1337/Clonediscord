@@ -1,19 +1,22 @@
 import { currentProfile } from '@/lib/current-profile';
 import { db } from '@/lib/db';
-import { redirect } from 'next/dist/server/api-utils';
+import { redirect } from 'next/navigation';
 import React from 'react'
-import NavigationAction from './navigation-action';
-import {Separator} from "@/components/ui/separator"
-import { ScrollArea } from '@/components/ui/scroll-area';
-import NavigationItem from './navigation-item';
+// import NavigationAction from './navigation-action';
+// import {Separator} from "@/components/ui/separator"
+// import { ScrollArea } from '@/components/ui/scroll-area';
+// import NavigationItem from './navigation-item';
 import { ModeToggle } from '../mode-toggle';
 import { UserButton } from '@clerk/nextjs';
+import NavigationAction from './navigation-action';
+import {Separator} from '@/components/ui/separator'
+import { ScrollArea } from '@radix-ui/react-scroll-area';
+import NavigationItem from './navigation-item';
 
-export default  async function Navigationsidebar() {
+export default  async function NavigationSidebar() {
     const profile = await currentProfile();
     if (profile == null)
-        return "Error"; // 
-    // {check valid redirect(`/`)}
+        return redirect("/");
     const servers = await db.server.findMany({
         where : {
             members : {
@@ -51,7 +54,8 @@ export default  async function Navigationsidebar() {
                 afterSignOutUrl='/'
                 appearance={{
                     elements:{
-                        avatarBox: "h-[48px] w-[48px]"
+                        avatarBox: "h-[48px] w-[48px]",
+                        
                     }
                 }}
             />
@@ -60,4 +64,4 @@ export default  async function Navigationsidebar() {
   )
 }
 
-Navigationsidebar();
+NavigationSidebar();

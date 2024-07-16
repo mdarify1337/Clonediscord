@@ -10,9 +10,10 @@ export default async function  MainLayout(
                     z-30 flex-col fixed inset-y-0">
                     <NavigationSidebar/>
                 </div>
-                <main>
+                <main className="md:pl-[72px] h-full">
                     {children}
                 </main>
             </div>
         )
 }
+

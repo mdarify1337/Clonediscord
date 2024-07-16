@@ -1,7 +1,8 @@
-import { initialProfile } from '@/lib/initial-profile';
+import  {initialProfile} from '@/lib/initial-profile'
 import { db } from '@/lib/db';
 import { redirect } from 'next/navigation';
-import {InitialModal} from '@/components/modals/initial-modal';
+import { InitialModal } from '@/components/modals/initial-modal';
+
 
 const SetupPage = async () => {
   const profile = await initialProfile();
@@ -31,41 +32,8 @@ const SetupPage = async () => {
 
   console.log("server : ==> ",server);
 
-  return <InitialModal />
+  return <InitialModal/>
 
 }
 
 export default SetupPage;
-
-/*
-export default async function SetupPage() {
-    const router = useRouter();
-    
-    useEffect(() => {
-      async function fetchData() {
-        const profile = await initialProfile();
-        const server = await db.server.findFirst({
-          where: {
-            members: {
-              some: {
-                profileid: profile.id,
-              },
-            },
-          },
-        });
-  
-        if (server) {
-          router.push(`/servers/${server.id}`);
-        }
-      }
-  
-      fetchData();
-    }, [router]);
-  
-    return (
-      <div>
-        Create a Server
-      </div>
-    );
-  }
-*/

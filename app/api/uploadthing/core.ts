@@ -7,11 +7,12 @@ const f = createUploadthing();
  
 const handdleAuth = () => {
     const {userId} = auth();
-    if (!userId) throw new Error("Unauthorized");
+    if (!userId) 
+        throw new Error("Unauthorized");
     return {userId: userId};
 }
 export const ourFileRouter = {
-    serverImage: f({ image: {maxFileSize: "8MB", maxFileCount: 1}})
+    serverImage: f({ image: {maxFileSize: "4MB", maxFileCount: 1}})
         .middleware(() => handdleAuth())
         .onUploadComplete(() => {}),
     messageFile: f(["image", "pdf"])

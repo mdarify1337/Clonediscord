@@ -23,8 +23,8 @@ export default function AciontTooltip({
 }: ActionTooltipProps){
     return (
         <TooltipProvider>
-            <Tooltip>
-                <TooltipTrigger>
+            <Tooltip delayDuration={50}>
+                <TooltipTrigger asChild>
                     {children}
                 </TooltipTrigger>
                 <TooltipContent side={side} align={align}>

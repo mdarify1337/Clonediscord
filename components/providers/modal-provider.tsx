@@ -4,6 +4,7 @@
 import { CreateServerModal } from "@/components/modals/create-server-modal";
 import React from "react";
 import { useEffect, useState } from "react";
+import { InitialModal } from "../modals/initial-modal";
 
 
 export default function ModalProvider(){
@@ -13,10 +14,11 @@ export default function ModalProvider(){
     }, []);
     if (!isMounted)
         return null;
+    console.log("isMounted == > ", isMounted);
     return (
-        <React.Fragment>
+        <>
             <CreateServerModal/>
-        </React.Fragment>
-        
+            {/* <InitialModal/> */}
+        </>
     )
 }

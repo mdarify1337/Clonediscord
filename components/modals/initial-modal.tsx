@@ -1,11 +1,7 @@
 "use client";
-
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-
+import '../../list.css'
+import * as z from "zod"
+import axios from "axios"
 import {
     Dialog,
     DialogContent,
@@ -24,11 +20,18 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 
+import discord from '../../../104904191_2630485293872237_5843907299366128296_n.jpg'
+
+
+import { Button } from "@/components/ui/button";
+import {useEffect, useState } from "react";
+import {useForm}    from "react-hook-form";
+import {zodResolver} from  "@hookform/resolvers/zod";
+
 import { Input } from "@/components/ui/input";
-import { Button } from "../ui/button";
-import { useEffect, useState } from "react";
-import { FileUpload } from "@/components/file-upload";
-import { useModal } from "@/hooks/use-modal-store";
+import { FileUpload } from "../file-upload";
+import { useRouter } from 'next/navigation';
+// import { Button } from "../ui/button";
 
 const formShema = z.object({
     name: z.string().min(1, {
@@ -40,25 +43,26 @@ const formShema = z.object({
 });
 
 export const InitialModal = () => {
-    const {isOpen, onClose, type} = useModal()
+    console.log("InitailModal --- >")
+    const [isMounted, setIsMounted] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(true); // State to control the modal's open status
 
-    const [isMounted, SetMounted] = useState<boolean>(false);
     const router = useRouter();
     useEffect(() => {
-        SetMounted(true);
+        setIsMounted(true);
     }, []);
-    const format = useForm({
+    const form = useForm({
         resolver: zodResolver(formShema),
         defaultValues: {
             name: "",
             imageUrl: "",
-        },
-    });
-    const isLoading = format.formState.isSubmitting;
+        }
+    })
+    const isLoading = form.formState.isSubmitting;
     const onSubmit = async (values: z.infer<typeof formShema>) => {
         try{
-            await   axios.post("/api/servers", values);
-            format.reset();
+            await axios.post("/api/servers", values);
+            form.reset();
             router.refresh();
             window.location.reload();
         } catch(error) {
@@ -66,15 +70,15 @@ export const InitialModal = () => {
         }
         console.log(values);
     };
-    if (!isMounted) return null;
-    const handClose= () => {
-        format.reset();
-        onClose();
-    }
+    if (!isMounted)
+            return null;
+    const handleClose = () => {
+        setIsOpen(false); // Close the modal when the close button is clicked
+      };
     return (
-        <Dialog open={true} onOpenChange={handClose} >
-            <DialogContent className="bg-white text-black p-4 overflow-hidden">
-                <DialogHeader className="pt-8 p-6">
+        <Dialog open={isOpen} onOpenChange={handleClose} >
+            <DialogContent className="bg-white text-black p-0 overflow-hidden">
+                <DialogHeader className="pt-8 px-6">
                     <DialogTitle className="text-2xl text-center font-bold">
                         CusTomize Your Server
                     </DialogTitle>
@@ -84,12 +88,12 @@ export const InitialModal = () => {
                         You can always change it later.
                     </DialogDescription>
                 </DialogHeader>
-                <Form {...format}>
-                    <form onSubmit={format.handleSubmit(onSubmit)} className="space-y-8">
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         <div className="space-y-8 px-6">
                             <div className="flex items-center justify-center text-center">
                                 <FormField
-                                    control={format.control}
+                                    control={form.control}
                                     name="imageUrl"
                                     render={({field}) =>(
                                         <FormItem>
@@ -106,7 +110,7 @@ export const InitialModal = () => {
                                 />
                             </div>
                             <FormField
-                                control={format.control}
+                                control={form.control}
                                 name="name"
                                 render={({ field }) => (
                                     <FormItem>
@@ -133,34 +137,10 @@ export const InitialModal = () => {
                                     </FormItem>
                                 )}
                             />
-                            {/* <FormField
-                                name="name"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Server Name</FormLabel>
-                                        <FormControl>
-                                            <Input {...field} placeholder="Enter server name" />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                name="imageUrl"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Server Image URL</FormLabel>
-                                        <FormControl>
-                                            <Input {...field} placeholder="Enter image URL" />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                             */}
                         </div>
-                        <DialogFooter className="bg-gray-100 px-3 py-4">
-                            <Button variant="primary" disabled={isLoading}>
+                        <DialogFooter className="bg-gray-100 px-6 py-4">
+                            <Button variant={"primary"}  disabled={isLoading} className="button-style">
+                                {/* <img src={discord} alt="" className="w-12 h-12" /> */}
                                 {isLoading ? "Loading..." : "Create Server"}
                             </Button>
                         </DialogFooter>
