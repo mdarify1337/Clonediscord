@@ -266,13 +266,13 @@ export default async function ServerIdLayoutFunction(
     ];
     if (!servers)
         return redirect("/");
-    console.log(servers)
+    // console.log(servers)
     return (
         <div className="h-full">
             <div className="hidden md:flex h-full w-60 
                 z-20 flex-col fixed inset-y-0 font-bold">
                 <ServerSideBarFunction serverId={params.serverId} />
-                Server Side Components
+                {/* Server Side Components */}
                 {/* {
                     servers.map((server)=> (
                         <div key={server.id} className='mb-4'>
