@@ -48,8 +48,8 @@ export const CreateServerModal = () => {
     const form = useForm({
         resolver: zodResolver(formShema),
         defaultValues: {
-            name: "",
-            imageUrl: "",
+            name: '',
+            imageUrl: '',
         }
     })
     console.log("form ==> ", form);
@@ -74,7 +74,7 @@ export const CreateServerModal = () => {
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
                     <DialogTitle className="text-2xl text-center font-bold">
-                        CusTomize Your Server
+                        Create Your Server
                     </DialogTitle>
                     <DialogDescription className="text-center text-zinc-500">
                         Give your server a personality with a name and an image.
@@ -93,11 +93,17 @@ export const CreateServerModal = () => {
                                         <FormItem>
                                             <FormControl>
                                                 {/* sdfsdfsdfdf */}
-                                                <FileUpload
+                                                <button 
+                                                    className="font-bold 
+                                                    border-sky-400 "
+                                                >
+                                                    UploadImage
+                                                </button>
+                                                {/* <FileUpload
                                                     endpoint="serverImage"
                                                     value={field.value}
                                                     onChange={field.onChange}
-                                                />
+                                                /> */}
                                             </FormControl>
                                         </FormItem>
                                     )}

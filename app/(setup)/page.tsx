@@ -33,6 +33,7 @@ const SetupPage = async () => {
   console.log("server : ==> ",server);
 
   return <InitialModal/>
+  // return <p></p>
 
 }
 

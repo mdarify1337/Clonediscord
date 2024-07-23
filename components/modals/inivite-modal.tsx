@@ -44,7 +44,7 @@ export default function InviteModal(){
     console.log(" ============= \n");
     const {server} = data;
     const inviteUrl = `${origin}/invite/${server?.inviteCode}`;
-    console.log("data ==> \n", data);
+    console.log("type ==> \n", type,"\n", "data ==> \n ", data);
     const onCopy = () => {
         navigator.clipboard.writeText(inviteUrl);
         setCopied(true);

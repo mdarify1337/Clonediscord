@@ -91,7 +91,7 @@ export default function ServerHeaderFunction({
 } : ServerHeaerProps){
     const {onOpen} = useModal();
     const isAdmin = role === MemberRole.ADMIN;
-    const isModerator = isAdmin || role === MemberRole.MODERATOR
+    const isModerator = isAdmin || role === MemberRole.MODERATOR;
     return (
         <DropdownMenu>
             <DropdownMenuTrigger 
@@ -99,15 +99,13 @@ export default function ServerHeaderFunction({
                 asChild    
             >
                 <button
-                    className="w-full text-md font-semibold px-3 flex
+                    className="w-full text-md font-bold px-3 flex
                     items-center h-12 border-neutral-200 
                     dark:border-neutral-800 border-b-2 hover:bg-zinc-700/10
                     dark:hover:bg-zinc-700/50 transition"
                 >
                     {
-                        servers.map((server) => (
-                            <p>{server.name}</p>
-                        ))
+                       server.name
                     }
                     <ChevronDown
                         className="h-5 w-5 ml-auto"/>
@@ -132,6 +130,7 @@ export default function ServerHeaderFunction({
                 {
                     isAdmin && (
                         <DropdownMenuItem
+                            onClick={() => onOpen("editServer", {server})}
                             className="px-3 py-2 text-sm cursor-pointer font-bold">
                             Server Settings
                             <Settings className="h-4 w-4 ml-auto"/>
@@ -141,6 +140,7 @@ export default function ServerHeaderFunction({
                 {
                     isAdmin && (
                         <DropdownMenuItem
+                            onClick={() => (onOpen("members", {server}))}
                             className="px-3 py-2 text-sm cursor-pointer font-bold">
                             Manage Members
                             <Users className="h-4 w-4 ml-auto"/>
@@ -150,6 +150,7 @@ export default function ServerHeaderFunction({
                 {
                     isModerator && (
                         <DropdownMenuItem
+                            onClick={() => onOpen("createChannel")}
                             className="px-3 py-2 text-sm cursor-pointer font-bold">
                             Create Channel
                             <PlusCircle className="h-4 w-4 ml-auto"/>
@@ -162,7 +163,9 @@ export default function ServerHeaderFunction({
                 {
                     isAdmin && (
                         <DropdownMenuItem
-                            className="text-rose-600 dark:hover:text-rose-500 px-3 py-2 text-sm cursor-pointer font-bold">
+                            onClick={() => onOpen("deleteServer", {server})}
+                            className="text-rose-600 dark:hover:text-rose-500 px-3
+                             py-2 text-sm cursor-pointer font-bold">
                             Delete Server
                             <Trash className="h-4 w-4 ml-auto"/>
                         </DropdownMenuItem>
@@ -171,6 +174,7 @@ export default function ServerHeaderFunction({
                 {
                     !isAdmin && (
                         <DropdownMenuItem
+                            onClick={() => onOpen("leaveServer", {server})}
                             className="px-3 py-2 text-sm cursor-pointer font-bold">
                             Leave Server
                             <LogOut className="h-4 w-4 ml-auto"/>

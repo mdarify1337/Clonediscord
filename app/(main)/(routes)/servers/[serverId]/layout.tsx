@@ -264,8 +264,8 @@ export default async function ServerIdLayoutFunction(
             ],
           },
     ];
-    if (!servers)
-        return redirect("/");
+    // if (!server)
+    //     return redirect("/");
     // console.log(servers)
     return (
         <div className="h-full">
