@@ -9,7 +9,6 @@ import { useModal } from '@/hooks/use-modal-store'
 
 export default function NavigationAction() {
     const {onOpen} = useModal();
-    console.log("onOpen == 1", onOpen);
     return (
         // <p>helll</p>
         <div className=''>

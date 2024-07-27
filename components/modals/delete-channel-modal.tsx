@@ -24,12 +24,7 @@ export default function DeleteChannelModal(){
     const { isOpen, onClose, type, data} = useModal();
     const [copied, setCopied] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    // const params = useParams();
-    console.log(" ============= \n");
-    console.log( "type", type);
     const isModalOpen = isOpen && type === "deleteChannel";
-    console.log("modalopen ==> ",isModalOpen);
-    console.log(" ============= \n");
     const {server, channel} = data;
     const route = useRouter();
     const onClick =async () => {

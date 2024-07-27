@@ -1,10 +1,11 @@
 import ChatHeader from "@/components/chat/chat-header";
-import GetOrCreateConversation from "@/lib/conversation";
+import { GetOrCreateConversation } from "@/lib/conversation";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs/server";
-import { error } from "console";
-import { redirect } from "next/navigation"
+import { redirect } from "next/navigation";
+
+
 
 interface MemberIdPageProps {
     params : {
@@ -13,43 +14,42 @@ interface MemberIdPageProps {
     }
 }
 
-
-export default async function MemberIdPageFunction(
+const MemberIdPage = async (
     {params} : MemberIdPageProps
-){
+) => {
     const profile = await currentProfile();
     if (!profile)
         return redirectToSignIn();
-    console.log(profile)
     const currentMember = await db.member.findFirst({
         where : {
             serverId: params.serverId,
-            profileId: params.memberId,
+            profileId: profile.id,
         },
         include : {
-            profile : true,
-        }
-    })
-    console.log(error, "errorhjsdfhsjhlsdfjhhjsdf")
-    
-    // const conversation = await GetOrCreateConversation(currentMember?.id, 
-    //     params.memberId)
-    // if (!conversation)
-    //     return redirect(`/servers/${params.serverId}`);
-    // const {memberOne, memberTwo} = conversation;
-    // const otherMember = memberOne.profileId === profile.id ? memberTwo : memberOne;
-    // console.log("conversation ", conversation);
+            profile: true,
+        },
+    });
+    if (!currentMember)
+        return redirect("/");
+    // console.log("current Memeber", currentMember)
+    const conversation = await GetOrCreateConversation(currentMember.id, params.memberId);
+    if (!conversation)
+        return redirect(`/servers/${params.serverId}`);
+    const {memberOne, memberTwo} = conversation;
+    const otherMember = memberOne.profileId === profile.id ? memberTwo : memberOne;
+
     return (
-        <p>ehlhlsdflsfjsjdf</p>
-    //    <div
-    //     className="bg-white dark:bg-[#313338] flex flex-col h-full"
-    //    >
-    //         <ChatHeader 
-    //             imageUrl={otherMember.profile.imageUrl}
-    //             name={otherMember.profile.name}
-    //             serverId={params.serverId}
-    //             type={"conversation"}
-    //         />
-    //    </div>
+        <div className="bg-white dark:bg-[#313338] flex flex-col">
+            <ChatHeader 
+                imageUrl={otherMember.profile.imageUrl}
+                name={otherMember.profile.name[0].toUpperCase() + 
+                    otherMember.profile.name.slice(1)}
+                serverId={params.serverId}
+                type="conversation"
+            />
+        </div>
     )
 }
+
+
+export default MemberIdPage;

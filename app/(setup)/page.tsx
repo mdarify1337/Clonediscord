@@ -14,7 +14,7 @@ const SetupPage = async () => {
       </div>
     );
   }
-  console.log("profile : ==> \n", profile);
+  // console.log("profile : ==> \n", profile);
 
   const server = await db.server.findFirst({
     where: {
@@ -30,7 +30,7 @@ const SetupPage = async () => {
     return redirect(`/servers/${server.id}`);
   }
 
-  console.log("server : ==> ",server);
+  // console.log("server : ==> ",server);
 
   return <InitialModal/>
   // return <p></p>

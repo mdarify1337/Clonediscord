@@ -21,11 +21,9 @@ export default function DeleteServerModal(){
     const { isOpen, onClose, type, data} = useModal();
     const [copied, setCopied] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    console.log(" ============= \n");
-    console.log( "type", type);
+
     const isModalOpen = isOpen && type === "deleteServer";
-    console.log("modalopen ==> ",isModalOpen);
-    console.log(" ============= \n");
+
     const {server} = data;
     const route = useRouter();
     const onClick =async () => {

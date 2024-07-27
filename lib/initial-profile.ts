@@ -2,7 +2,6 @@ import { currentUser, redirectToSignIn } from "@clerk/nextjs/server";
 import { db } from "./db";
 
 export const initialProfile = async () => {
-  console.log("Database URL: ==> \n", process.env.DATABASE_URL); 
   const user = await currentUser();
   if (!user) {
     await redirectToSignIn();

@@ -1,15 +1,21 @@
-import {db} from "@/lib/db"
-import { profile } from "console";
-import { createConnection } from "net";
-import { NextResponse } from "next/server";
+import {db} from "@/lib/db";
 
 
 
+export const  GetOrCreateConversation = async (memberOneId: string,
+    memberTwoId:string
+) => {
+    let conversation = await FindConversation(memberOneId, memberTwoId) 
+        ||  await FindConversation(memberTwoId, memberOneId);
+    if (!conversation)
+        conversation = await CreateNewConversation(memberOneId, memberTwoId);
+    return conversation;
+}
 
 
-export  async function FindConversation(
+const FindConversation = async (
     memberOneId: string, memberTwoId: string
-) {
+) => {
     try {
         return await db.conversation.findFirst({
             where : {
@@ -38,9 +44,9 @@ export  async function FindConversation(
 }
 
 
-export  async function CreateNewConversation(
+ const CreateNewConversation = async (
     memberOneId: string, memberTwoId: string
-) {
+) => {
     try {
         return await db.conversation.create({
             data : { 
@@ -66,12 +72,3 @@ export  async function CreateNewConversation(
 }
 
 
-export default async function GetOrCreateConversation(memberOneId: string,
-    memberTwoId:string
-) {
-    let conversation = await FindConversation(memberOneId, memberTwoId) ||
-        await FindConversation(memberTwoId, memberOneId);
-    if (!conversation)
-        conversation = await CreateNewConversation(memberOneId, memberTwoId);
-    return conversation;
-}

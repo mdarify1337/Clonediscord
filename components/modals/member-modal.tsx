@@ -119,7 +119,6 @@ export default function MemberModal(){
     const [loadingId, setLoadingId] = useState<string>("");
     const isModalOpen = isOpen && type === "members";
     const {server} = data as {server: ServerWithMembersWithProfiles};
-    console.log("type ==> \n", type,"\n", "data ==> \n ", data);
     const onKickChange = async (memberId: string) => {
         try {
             setLoadingId(memberId);
@@ -129,7 +128,6 @@ export default function MemberModal(){
                     serverId: server?.id,                }
             });
             const response = await axios.delete(url);
-            console.log("response ", response);
             router.refresh();
             onOpen("members", {server: response.data})
         } catch (error) {
@@ -147,7 +145,6 @@ export default function MemberModal(){
                     serverId: server?.id,                }
             });
             const response = await axios.patch(url, {role});
-            console.log("response ", response);
             router.refresh();
             onOpen("members", {server: response.data})
         } catch (error) {

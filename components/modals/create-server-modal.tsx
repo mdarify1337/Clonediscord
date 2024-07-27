@@ -41,10 +41,7 @@ const formShema = z.object({
 export const CreateServerModal = () => {
     const {isOpen, onClose, type} = useModal()
     const router = useRouter();
-    console.log(" ============= \n");
-    console.log( "type", type);
     const isModalOpen = isOpen && type === "createServer";
-    console.log("modalopen ==> ",isModalOpen);
     const form = useForm({
         resolver: zodResolver(formShema),
         defaultValues: {
@@ -52,7 +49,6 @@ export const CreateServerModal = () => {
             imageUrl: '',
         }
     })
-    console.log("form ==> ", form);
     const isLoading = form.formState.isSubmitted;
     const onSubmit = async (values: z.infer<typeof formShema>) => {
         try{
@@ -62,9 +58,7 @@ export const CreateServerModal = () => {
         } catch(error) {
             console.log(error);
         }
-        console.log(values);
     };
-    console.log("onSubmit ==> : ",onSubmit)
     const handClose= () => {
         form.reset();
         onClose();

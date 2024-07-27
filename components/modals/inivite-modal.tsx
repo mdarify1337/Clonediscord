@@ -37,14 +37,9 @@ export default function InviteModal(){
     const [copied, setCopied] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const origin = UseOrigin();
-    console.log(" ============= \n");
-    console.log( "type", type);
     const isModalOpen = isOpen && type === "invite";
-    console.log("modalopen ==> ",isModalOpen);
-    console.log(" ============= \n");
     const {server} = data;
     const inviteUrl = `${origin}/invite/${server?.inviteCode}`;
-    console.log("type ==> \n", type,"\n", "data ==> \n ", data);
     const onCopy = () => {
         navigator.clipboard.writeText(inviteUrl);
         setCopied(true);
@@ -56,7 +51,6 @@ export default function InviteModal(){
         try {
             setIsLoading(true);
             const response = await axios.patch(`/api/servers/${server?.id}/invite-code`);
-            console.log("response : ==> ", response);
             onOpen("invite", {server: response.data});
         } catch (error) {
             console.log(error)
