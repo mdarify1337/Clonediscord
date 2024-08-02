@@ -15,11 +15,10 @@ export default function UserAvatar({
     return (
         <Avatar className={cn(
             "h-7 w-7 md:h-10 rounded-full",
-            className
         )}>
             <AvatarImage
                 src={src}
-                className="rounded-full"
+                className="rounded-full w-8 h-8"
             />
         </Avatar>
     )

@@ -55,7 +55,7 @@ export default function ChatInput({
         }catch (error) {
             console.log(error)
         }
-        console.log(value);
+        // console.log("content ",value);
     }
     const {onOpen} = useModal();
     return (

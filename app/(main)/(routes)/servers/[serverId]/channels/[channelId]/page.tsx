@@ -1,13 +1,13 @@
 import ChatHeader from "@/components/chat/chat-header";
 import ChatInput from "@/components/chat/chat-input";
-import ChatMessages from "@/components/chat/chat-messages";
+import {ChatMessages} from "@/components/chat/chat-messages";
 import { currentProfile } from "@/lib/current-profile"
 import { db } from "@/lib/db";
-import { redirectToSignIn } from "@clerk/nextjs/server";
+// import { redirectToSignIn } from "@clerk/nextjs/server";
 // import { channel } from "diagnostics_channel";
 import { AwardIcon } from "lucide-react";
 import { redirect } from "next/navigation";
-
+import { auth } from "@clerk/nextjs/server";
 
 interface ChannelIdPageProps {
     params : {
@@ -19,7 +19,7 @@ interface ChannelIdPageProps {
 export default  async  function ChannelIdPageFunction({params}: ChannelIdPageProps){
     const profile = await currentProfile();
     if (!profile)
-        return redirectToSignIn();
+        return auth().redirectToSignIn();
     const channel = await db.channel.findUnique({
         where : {
             id: params.channelId

@@ -73,6 +73,7 @@ export const MessageFileModal = () => {
         form.reset();
         onClose();
       };
+      
     return (
         <Dialog open={isModalOpen} onOpenChange={handleClose} >
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
@@ -95,6 +96,7 @@ export const MessageFileModal = () => {
                                         <FormItem>
                                             <FormControl>
                                                 {/* sdfsdfsdfdf */}
+                                                {/* console.log("field",field) */}
                                                 {/* <FileUpload
                                                     endpoint="messageFile"
                                                     value={field.value}

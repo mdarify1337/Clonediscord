@@ -13,7 +13,8 @@ interface Props {
 
 export function FileUpload({ endpoint, value, onChange }: Props) {
   const fileType = value?.split(".").pop();
-  if (value && fileType !== 'pdf') {
+  console.log("value ==> \n", value, "filetype === \n", fileType);
+  if (value && fileType !== "pdf") {
     return (
       <div className="relative h-20 w-20">
         <Image 
@@ -34,7 +35,7 @@ export function FileUpload({ endpoint, value, onChange }: Props) {
     );
   }
 
-  if (value && fileType === 'pdf'){
+  if (value && fileType === "pdf"){
     return (
       <div className='relative flex items-center p-2 mt-2 rounded-md
         bg-background/10'>
@@ -60,7 +61,7 @@ export function FileUpload({ endpoint, value, onChange }: Props) {
       </div>
     )
   }
-
+  
   return (
     <UploadDropzone
       endpoint={endpoint}
